@@ -1,6 +1,8 @@
 import React, {useState} from "react";
-const Formulario = ({busqueda, setBusqueda}) => {
-    console.log(busqueda)
+import Error from "./Error";
+import PropTypes from 'prop-types'
+
+const Formulario = ({busqueda, setBusqueda, setConsultar}) => {
     const [error, setError] = useState(false)
 
     //extraer la ciudad y el pais
@@ -23,11 +25,13 @@ const Formulario = ({busqueda, setBusqueda}) => {
 
         setError(false);
         //pasarlo al componente principal
+
+        setConsultar(true);
     }
     
     return ( 
         <form onSubmit={handleSubmit}>
-            {error ? <p className="red darken-4 error">Todos los campos son obligatorios</p> : null }
+            {error ? <Error mensaje="Los campos son obligatorios" /> : null}
             <div className="input-field col s12">
                 <input type="text" name="ciudad" id="ciudad" value={ciudad} onChange={handleChange} />
                 <label htmlFor="ciudad">Ciudad:</label>
@@ -45,14 +49,19 @@ const Formulario = ({busqueda, setBusqueda}) => {
                 </select>
                 <label htmlFor="pais">País:</label>
             </div>
-            <div className="input-field col-s12">
+            <div className="input-field col s12">
                 <button type="submit" value="Buscar Clima" className="waves-effect waves-light btn-large btn-block yellow accent-4">
                     Buscar Clima
                 </button>
-                {/* <input type="submit" value="Buscar Clima" className="waves-effect waves-light btn-large btn-block yellow accent-4"/> */}
             </div>
         </form>
      );
+}
+
+Formulario.propTypes = {
+    busqueda: PropTypes.object.isRequired,
+    setBusqueda: PropTypes.func.isRequired,
+    setConsultar: PropTypes.func.isRequired
 }
  
 export default Formulario;
